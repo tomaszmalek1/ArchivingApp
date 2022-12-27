@@ -19,9 +19,6 @@ target/
 *.iml
 *.ipr
 *.iws
-*.cmd
-mvnw
-/.mvn/
 
 
 ### NetBeans ###
