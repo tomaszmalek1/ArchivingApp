@@ -11,7 +11,9 @@
 <body>
 <div id="wrapper">
     <jsp:include page="header.jsp"/>
-
+    <div id="header">
+        <div id="title_head"></div>
+    </div>
     <div id="container">
         <div id="box_news">
             <h2>Lorem ipsum dolor</h2>

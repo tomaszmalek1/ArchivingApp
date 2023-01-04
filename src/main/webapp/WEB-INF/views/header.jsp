@@ -15,8 +15,7 @@
         <li><a href="#">About</a></li>
         <li><a href="#">Offer</a></li>
         <li><a href="#">Contact</a></li>
+        <li><a href="#">Documents</a></li>
+        <li><a href="/addDocument">Add document</a></li>
     </ul>
-</div>
-<div id="header">
-    <div id="title_head"></div>
 </div>

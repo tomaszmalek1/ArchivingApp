@@ -63,9 +63,9 @@ a:hover {
 	float: left;
 	font-family: Arial;
 	color: #FFF;
-	margin-left: 15px;	
+	margin-left: 15px;
 	margin-top: 15px;
-	
+
 
 }
 
@@ -89,7 +89,7 @@ a:hover {
 	float: right;
 	padding-top: 25px;
 	padding-right: 50px;
-	
+
 }
 
 #search_top input {
@@ -98,7 +98,7 @@ a:hover {
 	color: #000;
 	background: url(../images/search.png) no-repeat right;
 }
-	
+
 #header {
 	float: left;
 	width: 960px;
@@ -285,4 +285,10 @@ h2 {
 
 #footer a {
 	color: #555;
+}
+
+#add_document_form h2{
+	text-align: center;
+	color: #000;
+	font-size: 26px;
 }
