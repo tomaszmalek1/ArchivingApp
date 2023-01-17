@@ -1,22 +1,34 @@
 package pl.tomaszmalek.archivingapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.tomaszmalek.archivingapp.model.Case;
+import pl.tomaszmalek.archivingapp.model.DBFile;
 import pl.tomaszmalek.archivingapp.model.Document;
+import pl.tomaszmalek.archivingapp.model.UploadFileResponse;
 import pl.tomaszmalek.archivingapp.service.CaseService;
+import pl.tomaszmalek.archivingapp.service.DBFileStorageService;
 import pl.tomaszmalek.archivingapp.service.DocumentService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
     private final CaseService caseService;
     private final DocumentService documentService;
+
+    @Autowired
+    private DBFileStorageService dbFileStorageService;
 
     public HomeController(CaseService caseService, DocumentService documentService) {
         this.caseService = caseService;
@@ -51,11 +63,18 @@ public class HomeController {
     }
 
     @PostMapping("/addDocument")
-    public String addDocument(@Valid Document document, BindingResult bindingResult) {
+    public String addDocument(@Valid Document document, BindingResult bindingResult, HttpSession ses) {
         if (bindingResult.hasErrors()) {
             return "addDocument";
         }
         documentService.save(document);
-        return "redirect:/";
+        ses.setAttribute("addedDocumentDetails", document);
+        return "redirect:/documentDetails";
+    }
+
+    @GetMapping("/documentDetails")
+    public String documentDetails(HttpSession ses) {
+        ses.setAttribute("documentDetails", ses.getAttribute("addedDocumentDetails"));
+        return "documentDetails";
     }
 }

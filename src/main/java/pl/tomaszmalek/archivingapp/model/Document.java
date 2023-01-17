@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "documents")
@@ -28,8 +27,10 @@ public class Document {
     private String comments;
     @ManyToOne()
     private Case caseSign;
+    @OneToOne
+    private DBFile dbFile;
 
-    public Document(long id, String description, LocalDate documentDate, String recipient, String sender, String documentSign, String comments, Case documentCase) {
+    public Document(long id, String description, LocalDate documentDate, String recipient, String sender, String documentSign, String comments, Case documentCase, DBFile dbFile) {
         this.id = id;
         this.description = description;
         this.documentDate = documentDate;
@@ -38,6 +39,7 @@ public class Document {
         this.documentSign = documentSign;
         this.comments = comments;
         this.caseSign = documentCase;
+        this.dbFile = dbFile;
     }
 
     public Document(){
@@ -106,5 +108,13 @@ public class Document {
 
     public void setCaseSign(Case documentCase) {
         this.caseSign = documentCase;
+    }
+
+    public DBFile getDbFile() {
+        return dbFile;
+    }
+
+    public void setDbFile(DBFile dbFile) {
+        this.dbFile = dbFile;
     }
 }

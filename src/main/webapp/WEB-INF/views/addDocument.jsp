@@ -15,9 +15,9 @@
 
     <div id="container">
         <div id="add_document_form">
-            <h2>Formularz</h2>
+            <h2>Adding a document</h2>
             <%--@elvariable id="document" type=""--%>
-            <form:form method="post" modelAttribute="document">
+            <form:form method="post" modelAttribute="document" id="singleUploadForm" name="singleUploadForm">
                 <%--                <div class="form-section form-section--columns">--%>
                 <%--                    <div class="form-section--column">--%>
                 <%--                        <div class="form-group form-group--inline">--%>
@@ -44,8 +44,27 @@
                 Odbiorca <form:input path="recipient"/><br>
                 Znak dokumentu <form:input path="documentSign"/><br>
                 Uwagi <form:textarea rows="2" cols="50" path="comments"/><br>
+
+
+<%--                <h3>Upload Single File</h3>--%>
+<%--                <form:input path="dbFile" id="singleFileUploadInput" type="file" name="file" class="file-input"/>--%>
                 <button type="submit" class="btn">Dodaj</button>
             </form:form>
+
+            <%--            Dodawanie pliku, narazie bez powiązania z dokumentem--%>
+
+            <%--            <h3>Upload Single File</h3>--%>
+            <%--            <form id="singleUploadForm" name="singleUploadForm">--%>
+            <%--                <input id="singleFileUploadInput" type="file" name="file" class="file-input" required/>--%>
+            <%--                <button type="submit" class="primary submit-btn">Submit</button>--%>
+            <%--            </form>--%>
+            <%--            <div class="upload-response">--%>
+            <%--                <div id="singleFileUploadError"></div>--%>
+            <%--                <div id="singleFileUploadSuccess"></div>--%>
+            <%--            </div>--%>
+
+            <%--            Koniec dodawania pliku--%>
+
         </div>
     </div>
     <jsp:include page="footer.jsp"/>
