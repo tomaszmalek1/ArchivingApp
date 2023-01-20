@@ -13,16 +13,16 @@ public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank
+    @NotBlank(message = "Complete the description")
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message = "Complete the document date")
     private LocalDate documentDate;
-    @NotBlank
+    @NotBlank(message = "Complete the name of the recipient")
     private String recipient;
-    @NotBlank
+    @NotBlank(message = "Complete the name of the sender")
     private String sender;
-    @NotBlank
+    @NotBlank(message = "Complete the document sign")
     private String documentSign;
     private String comments;
     @ManyToOne()

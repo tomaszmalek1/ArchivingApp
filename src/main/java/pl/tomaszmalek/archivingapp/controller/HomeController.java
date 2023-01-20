@@ -9,18 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.tomaszmalek.archivingapp.model.Case;
 import pl.tomaszmalek.archivingapp.model.DBFile;
 import pl.tomaszmalek.archivingapp.model.Document;
-import pl.tomaszmalek.archivingapp.model.UploadFileResponse;
 import pl.tomaszmalek.archivingapp.service.CaseService;
 import pl.tomaszmalek.archivingapp.service.DBFileStorageService;
 import pl.tomaszmalek.archivingapp.service.DocumentService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Optional;
+
 
 @Controller
 public class HomeController {
@@ -63,18 +61,18 @@ public class HomeController {
     }
 
     @PostMapping("/addDocument")
-    public String addDocument(@Valid Document document, BindingResult bindingResult, HttpSession ses) {
+    public String addDocument(@Valid Document document, BindingResult bindingResult, @RequestParam("file") MultipartFile file, HttpSession ses, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("cases", caseService.getAll());
             return "addDocument";
         }
+        if (!file.isEmpty()) {
+            DBFile dbFile = dbFileStorageService.storeFile(file);
+            document.setDbFile(dbFile);
+        }
         documentService.save(document);
-        ses.setAttribute("addedDocumentDetails", document);
-        return "redirect:/documentDetails";
-    }
-
-    @GetMapping("/documentDetails")
-    public String documentDetails(HttpSession ses) {
-        ses.setAttribute("documentDetails", ses.getAttribute("addedDocumentDetails"));
-        return "documentDetails";
+        ses.setAttribute("documentDetails", document);
+        return "/documentDetails";
+        //poczyścić sesje gdzieś
     }
 }

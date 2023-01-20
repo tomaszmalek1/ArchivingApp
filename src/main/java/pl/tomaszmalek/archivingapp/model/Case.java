@@ -15,15 +15,15 @@ public class Case {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank
+    @NotBlank(message = "Complete the case sign")
     private String caseSign;
-    @NotBlank
+    @NotBlank(message = "Complete the description")
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message = "Complete the document date of initiation")
     private LocalDate dateOfInitiation;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message = "Complete the end date")
     private LocalDate endDate;
     private String comments;
     @OneToMany(mappedBy = "caseSign")

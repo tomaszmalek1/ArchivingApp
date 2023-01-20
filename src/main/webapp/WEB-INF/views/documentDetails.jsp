@@ -12,54 +12,52 @@
 <body>
 <div id="wrapper">
     <jsp:include page="header.jsp"/>
-
     <div id="container">
-        <div id="document_details">
+        <div class="table">
             <table>
-                <caption>Szczegóły dokumentu</caption>
+                <caption>Document details</caption>
                 <tr>
-                    <th>Znak sprawy (Wewnętrzny):</th>
+                    <th>Case sign:</th>
                     <td>${documentDetails.caseSign.caseSign}</td>
                 </tr>
                 <tr>
-                    <th>Opis dokumentu:</th>
+                    <th>Description:</th>
                     <td>${documentDetails.description}</td>
                 </tr>
                 <tr>
-                    <th>Data dokumentu:</th>
+                    <th>Document Date:</th>
                     <td>${documentDetails.documentDate}</td>
                 </tr>
                 <tr>
-                    <th>Nadawca:</th>
+                    <th>Sender:</th>
                     <td>${documentDetails.sender}</td>
                 </tr>
                 <tr>
-                    <th>Odbiorca:</th>
+                    <th>Recipient:</th>
                     <td>${documentDetails.recipient}</td>
                 </tr>
                 <tr>
-                    <th>Znak dokumentu:</th>
+                    <th>Document sign:</th>
                     <td>${documentDetails.documentSign}</td>
                 </tr>
                 <tr>
-                    <th>Uwagi:</th>
+                    <th>Comments:</th>
                     <td>${documentDetails.comments}</td>
                 </tr>
-
+                <tr>
+                    <th>Attachment:</th>
+                    <c:choose>
+                        <c:when test="${documentDetails.dbFile != null}"><a href="#">Download</a></c:when>
+                        <c:otherwise>
+                            <form id="singleUploadForm" name="singleUploadForm">
+                                <td><input id="singleFileUploadInput" type="file" name="file" class="file-input"
+                                       required/>
+                                <button type="submit">Add</button></td>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
             </table>
-<%--            Znak sprawy (Wewnętrzny): ${documentDetails.caseSign.caseSign}--%>
-            <%--            Opis dokumentu: ${documentDetails.description}--%>
-            <%--            Data dokumentu: ${documentDetails.documentDate}--%>
-            <%--            Nadawca: ${documentDetails.sender}--%>
-            <%--            Odbiorca: ${documentDetails.recipient}--%>
-            <%--            Znak dokumentu: ${documentDetails.documentSign}--%>
-            <%--            Uwagi: ${documentDetails.comments}--%>
-
-            <h3>Upload attachment</h3>
-            <form id="singleUploadForm" name="singleUploadForm">
-                <input id="singleFileUploadInput" type="file" name="file" class="file-input" required/>
-                <button type="submit" class="primary submit-btn">Dodaj</button>
-            </form>
         </div>
     </div>
     <jsp:include page="footer.jsp"/>
