@@ -44,19 +44,24 @@
                     <th>Comments:</th>
                     <td>${documentDetails.comments}</td>
                 </tr>
-                <tr>
-                    <th>Attachment:</th>
-                    <c:choose>
-                        <c:when test="${documentDetails.dbFile != null}"><a href="#">Download</a></c:when>
-                        <c:otherwise>
-                            <form id="singleUploadForm" name="singleUploadForm">
-                                <td><input id="singleFileUploadInput" type="file" name="file" class="file-input"
-                                       required/>
-                                <button type="submit">Add</button></td>
-                            </form>
-                        </c:otherwise>
-                    </c:choose>
-                </tr>
+                <c:choose>
+                    <c:when test="${documentDetails.dbFile != null}">
+                        <tr>
+                            <th>Attachment:</th>
+                            <td><a href="/downloadFile/${documentDetails.dbFile.id}">Download</a></td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <th>Attachment:</th>
+                            <form:form method="post" action="/addAttachment" enctype="multipart/form-data">
+                                <td><input type="file" name="file"/>
+                                    <button type="submit">Add</button>
+                                </td>
+                            </form:form>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
             </table>
         </div>
     </div>

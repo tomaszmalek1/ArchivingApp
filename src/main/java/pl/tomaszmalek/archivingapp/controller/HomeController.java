@@ -54,7 +54,8 @@ public class HomeController {
     }
 
     @GetMapping("/addDocument")
-    public String addDocument(Model model) {
+    public String addDocument(Model model, HttpSession ses) {
+        ses.removeAttribute("documentDetails");
         model.addAttribute("document", new Document());
         model.addAttribute("cases", caseService.getAll());
         return "addDocument";
@@ -72,7 +73,17 @@ public class HomeController {
         }
         documentService.save(document);
         ses.setAttribute("documentDetails", document);
-        return "/documentDetails";
-        //poczyścić sesje gdzieś
+        return "documentDetails";
+    }
+
+    @PostMapping("/addAttachment")
+    public String addAttachment(HttpSession ses, @RequestParam("file") MultipartFile file) {
+        Document document = (Document) ses.getAttribute("documentDetails");
+        if (!file.isEmpty()) {
+            DBFile dbFile = dbFileStorageService.storeFile(file);
+            document.setDbFile(dbFile);
+        }
+        documentService.save(document);
+        return "documentDetails";
     }
 }
