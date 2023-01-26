@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,9 +21,11 @@ public class Case {
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Complete the document date of initiation")
+    @Past
     private LocalDate dateOfInitiation;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Complete the end date")
+    @Past
     private LocalDate endDate;
     private String comments;
     @OneToMany(mappedBy = "caseSign")

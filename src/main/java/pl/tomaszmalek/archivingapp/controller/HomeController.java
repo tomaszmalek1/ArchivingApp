@@ -4,33 +4,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.tomaszmalek.archivingapp.model.Case;
 import pl.tomaszmalek.archivingapp.model.DBFile;
 import pl.tomaszmalek.archivingapp.model.Document;
+import pl.tomaszmalek.archivingapp.repository.DocumentRepository;
 import pl.tomaszmalek.archivingapp.service.CaseService;
 import pl.tomaszmalek.archivingapp.service.DBFileStorageService;
 import pl.tomaszmalek.archivingapp.service.DocumentService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
 public class HomeController {
     private final CaseService caseService;
     private final DocumentService documentService;
-
+    private final DocumentRepository documentRepository;
     @Autowired
     private DBFileStorageService dbFileStorageService;
 
-    public HomeController(CaseService caseService, DocumentService documentService) {
+    public HomeController(CaseService caseService, DocumentService documentService, DocumentRepository documentRepository) {
         this.caseService = caseService;
         this.documentService = documentService;
+        this.documentRepository = documentRepository;
     }
 
     @RequestMapping("/")
@@ -44,7 +45,7 @@ public class HomeController {
         return "addCase";
     }
 
-    @PostMapping("addCase")
+    @PostMapping("/addCase")
     public String addCase(@Valid Case aCase, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/addCase";
@@ -84,6 +85,27 @@ public class HomeController {
             document.setDbFile(dbFile);
         }
         documentService.save(document);
+        return "documentDetails";
+    }
+
+    @GetMapping("/casesList")
+    public String casesList(Model model) {
+        List<Case> allCases = caseService.getAll();
+        model.addAttribute("allCases", allCases);
+        return "casesList";
+    }
+
+    @GetMapping("/documentsList/{oneCaseId}")
+    public String documentsList(@PathVariable("oneCaseId") Long id, Model model) {
+        List<Document> documentByCaseSign = documentRepository.findDocumentByCaseSign(id);
+        model.addAttribute("documentsList", documentByCaseSign);
+        return "documentsList";
+    }
+
+    @GetMapping("/documentDetails/{documentId}")
+    public String documentDetails(@PathVariable long documentId, HttpSession ses) {
+        Optional<Document> document = documentService.getById(documentId);
+        ses.setAttribute("documentDetails", document.get());
         return "documentDetails";
     }
 }

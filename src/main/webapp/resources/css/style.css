@@ -315,9 +315,9 @@ h2 {
 }
 
 .table table {
-    width: 80%;
+    width: 100%;
     border-collapse: collapse;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .table caption {

@@ -41,7 +41,7 @@
                         <th>Comments:</th>
                         <td><form:textarea rows="2" cols="50" path="comments"/></td>
                     </tr>
-                </table>
+                </table><br>
                 <div class="button_center">
                     <button type="submit" class="btn">Add</button>
                 </div>
