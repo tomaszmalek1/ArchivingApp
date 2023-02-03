@@ -13,27 +13,37 @@
 <div id="wrapper">
     <jsp:include page="header.jsp"/>
     <div id="container">
+        <h2>List of documents</h2>
         <div class="table">
             <table>
+                <h3>Case sign: ${caseSign}</h3>
                 <thead>
                 <tr>
-                    <%--                    <th>No.</th>--%>
+                    <th>No.</th>
                     <th>Document sign</th>
+                    <th>Document date</th>
                     <th>Description</th>
-                    <th>Details</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${documentsList}" var="document">
-                    <%--                        <c:forEach var="no" begin="1" end="8">--%>
+                <c:forEach items="${documentsList}" var="document" varStatus="count">
                     <tr>
-                            <%--                            <td>${no}</td>--%>
+                        <td>${count.count}.</td>
                         <td>${document.documentSign}</td>
+                        <td>${document.documentDate}</td>
                         <td>${document.description}</td>
-                        <td><a href="/documentDetails/${document.id}">CLICK</a></td>
+                        <td><a href="/documentDetails/${document.id}/${document.caseSign.id}">Details</a>
+                            <c:choose>
+                            <c:when test="${document.dbFile != null}">
+                            <a href="/downloadFile/${document.dbFile.id}">Download</a></td>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="/documentDetails/${document.id}/${document.caseSign.id}">Add</a></td>
+                        </c:otherwise>
+                        </c:choose>
                     </tr>
                 </c:forEach>
-                <%--                </c:forEach>--%>
                 </tbody>
             </table>
         </div>

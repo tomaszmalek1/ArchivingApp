@@ -313,6 +313,9 @@ h2 {
     color: #fff;
     font-size: larger;
 }
+.table a {
+    color: #fff;
+}
 
 .table table {
     width: 100%;

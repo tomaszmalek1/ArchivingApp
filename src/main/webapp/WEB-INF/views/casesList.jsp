@@ -13,10 +13,12 @@
 <div id="wrapper">
     <jsp:include page="header.jsp"/>
     <div id="container">
+        <h2>List of cases</h2>
         <div class="table">
             <table>
                 <thead>
                 <tr>
+                    <th>No.</th>
                     <th>Case sign</th>
                     <th>Description</th>
                     <th>Date of initiation</th>
@@ -26,8 +28,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${allCases}" var="oneCase">
+                <c:forEach items="${allCases}" var="oneCase" varStatus="count">
                     <tr>
+                        <td>${count.count}.</td>
                         <td>${oneCase.caseSign}</td>
                         <td>${oneCase.description}</td>
                         <td>${oneCase.dateOfInitiation}</td>

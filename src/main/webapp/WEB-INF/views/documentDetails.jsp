@@ -18,7 +18,7 @@
                 <caption>Document details</caption>
                 <tr>
                     <th>Case sign:</th>
-                    <td>${documentDetails.caseSign.caseSign}</td>
+                    <td><a href="/documentsList/${documentDetails.caseSign.id}">${documentDetails.caseSign.caseSign}</a></td>
                 </tr>
                 <tr>
                     <th>Description:</th>

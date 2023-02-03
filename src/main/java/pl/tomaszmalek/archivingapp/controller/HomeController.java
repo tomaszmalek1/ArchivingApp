@@ -1,11 +1,17 @@
 package pl.tomaszmalek.archivingapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.tomaszmalek.archivingapp.exceptions.MyFileNotFoundException;
 import pl.tomaszmalek.archivingapp.model.Case;
 import pl.tomaszmalek.archivingapp.model.DBFile;
 import pl.tomaszmalek.archivingapp.model.Document;
@@ -16,8 +22,11 @@ import pl.tomaszmalek.archivingapp.service.DocumentService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -51,7 +60,7 @@ public class HomeController {
             return "/addCase";
         }
         caseService.save(aCase);
-        return "redirect:/";
+        return "redirect:/casesList";
     }
 
     @GetMapping("/addDocument")
@@ -67,8 +76,7 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("cases", caseService.getAll());
             return "addDocument";
-        }
-        if (!file.isEmpty()) {
+        } else if (!file.isEmpty()) {
             DBFile dbFile = dbFileStorageService.storeFile(file);
             document.setDbFile(dbFile);
         }
@@ -88,24 +96,53 @@ public class HomeController {
         return "documentDetails";
     }
 
+    @GetMapping("/downloadFile/{fileId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) {
+        try {
+            DBFile dbFile = dbFileStorageService.getFile(fileId);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(dbFile.getFileType()))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
+                    .body(new ByteArrayResource(dbFile.getData()));
+        } catch (MyFileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @GetMapping("/casesList")
     public String casesList(Model model) {
-        List<Case> allCases = caseService.getAll();
+        List<Case> allCases = caseService.getAll()
+                .stream()
+                .sorted(Comparator.comparing(Case::getCaseSign))
+                .collect(Collectors.toList());
         model.addAttribute("allCases", allCases);
         return "casesList";
     }
 
     @GetMapping("/documentsList/{oneCaseId}")
     public String documentsList(@PathVariable("oneCaseId") Long id, Model model) {
-        List<Document> documentByCaseSign = documentRepository.findDocumentByCaseSign(id);
-        model.addAttribute("documentsList", documentByCaseSign);
+        try {
+            List<Document> documentByCaseSign = documentRepository.findDocumentByCaseSign(id);
+            Optional<Case> aCase = caseService.getById(id);
+            model.addAttribute("caseSign", aCase.get().getCaseSign());
+            model.addAttribute("documentsList", documentByCaseSign);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            return "redirect:/casesList";
+        }
         return "documentsList";
     }
 
-    @GetMapping("/documentDetails/{documentId}")
-    public String documentDetails(@PathVariable long documentId, HttpSession ses) {
-        Optional<Document> document = documentService.getById(documentId);
-        ses.setAttribute("documentDetails", document.get());
+    @GetMapping("/documentDetails/{documentId}/{oneCaseId}")
+    public String documentDetails(@PathVariable long documentId, @PathVariable Long oneCaseId, HttpSession ses) {
+        try {
+            Optional<Document> document = documentService.getById(documentId);
+            ses.setAttribute("documentDetails", document.get());
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            return "redirect:/documentsList/" + oneCaseId;
+        }
         return "documentDetails";
     }
 }
