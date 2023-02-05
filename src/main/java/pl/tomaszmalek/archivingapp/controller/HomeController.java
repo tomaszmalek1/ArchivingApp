@@ -15,6 +15,7 @@ import pl.tomaszmalek.archivingapp.exceptions.MyFileNotFoundException;
 import pl.tomaszmalek.archivingapp.model.Case;
 import pl.tomaszmalek.archivingapp.model.DBFile;
 import pl.tomaszmalek.archivingapp.model.Document;
+import pl.tomaszmalek.archivingapp.repository.CaseRepository;
 import pl.tomaszmalek.archivingapp.repository.DocumentRepository;
 import pl.tomaszmalek.archivingapp.service.CaseService;
 import pl.tomaszmalek.archivingapp.service.DBFileStorageService;
@@ -34,13 +35,15 @@ public class HomeController {
     private final CaseService caseService;
     private final DocumentService documentService;
     private final DocumentRepository documentRepository;
+    private final CaseRepository caseRepository;
     @Autowired
     private DBFileStorageService dbFileStorageService;
 
-    public HomeController(CaseService caseService, DocumentService documentService, DocumentRepository documentRepository) {
+    public HomeController(CaseService caseService, DocumentService documentService, DocumentRepository documentRepository, CaseRepository caseRepository) {
         this.caseService = caseService;
         this.documentService = documentService;
         this.documentRepository = documentRepository;
+        this.caseRepository = caseRepository;
     }
 
     @RequestMapping("/")
@@ -123,7 +126,7 @@ public class HomeController {
     @GetMapping("/documentsList/{oneCaseId}")
     public String documentsList(@PathVariable("oneCaseId") Long id, Model model) {
         try {
-            List<Document> documentByCaseSign = documentRepository.findDocumentByCaseSign(id);
+            List<Document> documentByCaseSign = documentRepository.findDocumentByCaseSignId(id);
             Optional<Case> aCase = caseService.getById(id);
             model.addAttribute("caseSign", aCase.get().getCaseSign());
             model.addAttribute("documentsList", documentByCaseSign);
@@ -144,5 +147,14 @@ public class HomeController {
             return "redirect:/documentsList/" + oneCaseId;
         }
         return "documentDetails";
+    }
+
+    @PostMapping("/searchByCaseSign")
+    public String searchByCaseSign(@RequestParam String caseSign) {
+        try {
+            return "redirect:/documentsList/" + caseRepository.findCaseByCaseSign(caseSign).getId();
+        } catch (NullPointerException e) {
+            return "redirect:/";
+        }
     }
 }
