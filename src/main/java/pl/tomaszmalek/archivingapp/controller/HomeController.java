@@ -1,6 +1,5 @@
 package pl.tomaszmalek.archivingapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -36,14 +35,14 @@ public class HomeController {
     private final DocumentService documentService;
     private final DocumentRepository documentRepository;
     private final CaseRepository caseRepository;
-    @Autowired
-    private DBFileStorageService dbFileStorageService;
+    private final DBFileStorageService dbFileStorageService;
 
-    public HomeController(CaseService caseService, DocumentService documentService, DocumentRepository documentRepository, CaseRepository caseRepository) {
+    public HomeController(CaseService caseService, DocumentService documentService, DocumentRepository documentRepository, CaseRepository caseRepository, DBFileStorageService dbFileStorageService) {
         this.caseService = caseService;
         this.documentService = documentService;
         this.documentRepository = documentRepository;
         this.caseRepository = caseRepository;
+        this.dbFileStorageService = dbFileStorageService;
     }
 
     @RequestMapping("/")
@@ -154,6 +153,7 @@ public class HomeController {
         try {
             return "redirect:/documentsList/" + caseRepository.findCaseByCaseSign(caseSign).getId();
         } catch (NullPointerException e) {
+            e.printStackTrace();
             return "redirect:/";
         }
     }
