@@ -24,7 +24,8 @@
         <h2>List of documents</h2>
         <div class="table">
             <table id="table_id">
-                <h3>Case sign: ${caseSign}</h3>
+                <h3>Case sign: ${caseSign.get().caseSign}</h3>
+                <h3><a href="/addDocument/${caseSign.get().id}">Add document</a></h3>
                 <thead>
                 <tr>
                     <th>No.</th>
@@ -46,9 +47,6 @@
                             <c:when test="${document.dbFile != null}">
                             <a href="/downloadFile/${document.dbFile.id}">Download</a></td>
                         </c:when>
-                        <c:otherwise>
-                            <a href="/documentDetails/${document.id}/${document.caseSign.id}">Add</a></td>
-                        </c:otherwise>
                         </c:choose>
                     </tr>
                 </c:forEach>

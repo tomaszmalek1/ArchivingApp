@@ -16,10 +16,9 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="#">About</a></li>
-        <%--        <li><a href="#">Offer</a></li>--%>
         <li><a href="#">Contact</a></li>
+        <li><a href="/addCase">New case</a></li>
         <li><a href="/casesList">Cases</a></li>
-        <li><a href="/addCase">Add case</a></li>
-        <li><a href="/addDocument">Add document</a></li>
+<%--        <li><a href="/addDocument">Add document</a></li>--%>
     </ul>
 </div>

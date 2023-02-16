@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Archiving App</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css"/>
 </head>
 
 <body>
@@ -20,11 +20,11 @@
                 <table>
                     <tr>
                         <th>Case sign:</th>
-                        <td><form:select path="caseSign">
-                            <c:forEach var="aCase" items="${cases}">
-                                <form:option value="${aCase}">${aCase.caseSign}</form:option>
-                            </c:forEach>
-                        </form:select><br><form:errors path="caseSign" cssClass="errors"/></td>
+                        <td>
+                            <form:select path="caseSign">
+                                <form:option value="${aCase.get()}">${aCase.get().caseSign}</form:option>
+                            </form:select><br><form:errors path="caseSign" cssClass="errors"/>
+                        </td>
                     </tr>
                     <tr>
                         <th>Description:</th>

@@ -62,29 +62,29 @@ public class HomeController {
             return "/addCase";
         }
         caseService.save(aCase);
-        return "redirect:/casesList";
+        return "redirect:/documentsList/" + aCase.getId();
     }
 
-    @GetMapping("/addDocument")
-    public String addDocument(Model model, HttpSession ses) {
-        ses.removeAttribute("documentDetails");
+    @GetMapping("/addDocument/{caseId}")
+    public String addDocument(@PathVariable long caseId, Model model) {
         model.addAttribute("document", new Document());
-        model.addAttribute("cases", caseService.getAll());
+        Optional<Case> aCase = caseService.getById(caseId);
+        model.addAttribute("aCase", aCase);
         return "addDocument";
     }
 
-    @PostMapping("/addDocument")
-    public String addDocument(@Valid Document document, BindingResult bindingResult, @RequestParam("file") MultipartFile file, HttpSession ses, Model model) {
+    @PostMapping("/addDocument/{caseId}")
+    public String addDocument(@PathVariable long caseId, @Valid Document document, BindingResult bindingResult, @RequestParam("file") MultipartFile file, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("cases", caseService.getAll());
+            Optional<Case> aCase = caseService.getById(caseId);
+            model.addAttribute("aCase", aCase);
             return "addDocument";
         } else if (!file.isEmpty()) {
             DBFile dbFile = dbFileStorageService.storeFile(file);
             document.setDbFile(dbFile);
         }
         documentService.save(document);
-        ses.setAttribute("documentDetails", document);
-        return "documentDetails";
+        return "redirect:/documentDetails/" + document.getId() + "/" + document.getCaseSign().getId();
     }
 
     @PostMapping("/addAttachment")
@@ -127,7 +127,7 @@ public class HomeController {
         try {
             List<Document> documentByCaseSign = documentRepository.findDocumentByCaseSignId(id);
             Optional<Case> aCase = caseService.getById(id);
-            model.addAttribute("caseSign", aCase.get().getCaseSign());
+            model.addAttribute("caseSign", aCase);
             model.addAttribute("documentsList", documentByCaseSign);
         } catch (NoSuchElementException e) {
             e.printStackTrace();
@@ -138,6 +138,7 @@ public class HomeController {
 
     @GetMapping("/documentDetails/{documentId}/{oneCaseId}")
     public String documentDetails(@PathVariable long documentId, @PathVariable Long oneCaseId, HttpSession ses) {
+        ses.removeAttribute("documentDetails");
         try {
             Optional<Document> document = documentService.getById(documentId);
             ses.setAttribute("documentDetails", document.get());
