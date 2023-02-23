@@ -315,6 +315,7 @@ h2 {
 }
 .table a {
     color: #fff;
+    text-decoration: underline;
 }
 
 .table table {
@@ -353,50 +354,5 @@ h2 {
     font-size: 12px;
 }
 
-/*Form css - addDocument.jsp*/
-/*form .form-section h4 {*/
-/*    font-family: 'Open Sans', sans-serif;*/
-/*    font-weight: 600;*/
-/*    font-style: normal;*/
-/*    font-size: 1.8rem;*/
-/*}*/
-
-/*form .form-section--columns {*/
-/*    display: -webkit-box;*/
-/*    display: -ms-flexbox;*/
-/*    display: flex;*/
-/*    -ms-flex-wrap: wrap;*/
-/*    flex-wrap: wrap;*/
-/*}*/
-
-/*form .form-section--columns > div {*/
-/*    padding-right: 20px;*/
-/*    -webkit-box-flex: 1;*/
-/*    -ms-flex-positive: 1;*/
-/*    flex-grow: 1;*/
-/*}*/
-
-/*form .form-section--columns > div:last-of-type {*/
-/*    padding-right: 0;*/
-/*}*/
-
-/*form .form-section--columns .form-group label {*/
-/*    width: 100%;*/
-/*    display: block;*/
-/*    display: -webkit-box;*/
-/*    display: -ms-flexbox;*/
-/*    display: flex;*/
-/*    -webkit-box-pack: justify;*/
-/*    -ms-flex-pack: justify;*/
-/*    justify-content: space-between;*/
-/*    -webkit-box-align: center;*/
-/*    -ms-flex-align: center;*/
-/*    align-items: center;*/
-/*}*/
-
-/*form .form-section--columns .form-group label textarea, form .form-section--columns .form-group label input {*/
-/*    margin-left: 20px;*/
-/*    max-width: 200px;*/
-/*}*/
 
 

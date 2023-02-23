@@ -13,9 +13,9 @@
 <div id="wrapper">
     <jsp:include page="header.jsp"/>
     <div id="container">
+        <h2>Document details</h2>
         <div class="table">
             <table>
-                <caption>Document details</caption>
                 <tr>
                     <th>Case sign:</th>
                     <td><a href="/documentsList/${documentDetails.caseSign.id}">${documentDetails.caseSign.caseSign}</a></td>

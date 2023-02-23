@@ -155,7 +155,7 @@ public class HomeController {
             return "redirect:/documentsList/" + caseRepository.findCaseByCaseSign(caseSign).getId();
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return "redirect:/";
+            return "redirect:/casesList";
         }
     }
 }
