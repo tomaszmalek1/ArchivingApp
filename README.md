@@ -32,7 +32,7 @@ Write in Query console:<br>
    2. complete password
 
 ## ScreenShots:
-![imege](src/main/webapp/resources/images/Zrzut ekranu 2023-03-1 o 15.59.33.png)
-![imege](src/main/webapp/resources/images/Zrzut ekranu 2023-03-1 o 15.59.45.png)
-![imege](src/main/webapp/resources/images/Zrzut ekranu 2023-03-1 o 15.59.53.png)
-![imege](src/main/webapp/resources/images/Zrzut ekranu 2023-03-1 o 16.00.06.png)
+![Adding a case](https://github.com/tomaszmalek1/ArchivingApp/blob/37efef12a2755b1b1d692341eaf5cc155929ad26/src/main/webapp/resources/images/Zrzut%20ekranu%202023-03-1%20o%2015.59.33.png)
+![List of cases](https://github.com/tomaszmalek1/ArchivingApp/blob/37efef12a2755b1b1d692341eaf5cc155929ad26/src/main/webapp/resources/images/Zrzut%20ekranu%202023-03-1%20o%2015.59.45.png)
+![List of documents](https://github.com/tomaszmalek1/ArchivingApp/blob/37efef12a2755b1b1d692341eaf5cc155929ad26/src/main/webapp/resources/images/Zrzut%20ekranu%202023-03-1%20o%2015.59.53.png)
+![Document details](https://github.com/tomaszmalek1/ArchivingApp/blob/37efef12a2755b1b1d692341eaf5cc155929ad26/src/main/webapp/resources/images/Zrzut%20ekranu%202023-03-1%20o%2016.00.06.png)
