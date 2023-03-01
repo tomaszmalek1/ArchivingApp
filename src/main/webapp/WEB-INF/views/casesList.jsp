@@ -34,19 +34,17 @@
                     <th>Date of initiation</th>
                     <th>End date</th>
                     <th>Comments</th>
-                    <th>Doc.</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${allCases}" var="oneCase" varStatus="count">
                     <tr>
                         <td>${count.count}.</td>
-                        <td>${oneCase.caseSign}</td>
+                        <td><a href="/documentsList/${oneCase.id}">${oneCase.caseSign}</a></td>
                         <td>${oneCase.description}</td>
                         <td>${oneCase.dateOfInitiation}</td>
                         <td>${oneCase.endDate}</td>
                         <td>${oneCase.comments}</td>
-                        <td><a href="/documentsList/${oneCase.id}">CLICK</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

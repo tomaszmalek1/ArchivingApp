@@ -21,8 +21,10 @@ $(document).ready(function () {
     table.buttons(0, null).container().prependTo(table.table().container());
 });
 
+
 $(document).ready(function () {
     var table = $('#table_id_documents').DataTable();
+
     new $.fn.dataTable.Buttons(table, {
         buttons: [
             {
@@ -37,7 +39,7 @@ $(document).ready(function () {
                 exportOptions: {
                     columns: [0, 1, 2, 3]
                 },
-                title: 'List of documents'
+                title: 'List of documents - ' + document.getElementById("caseSignClass").innerHTML,
             }
         ]
     });

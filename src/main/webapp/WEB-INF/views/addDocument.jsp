@@ -18,14 +18,11 @@
         <form:form method="post" modelAttribute="document" enctype="multipart/form-data">
             <div class="table">
                 <table>
-                    <tr>
-                        <th>Case sign:</th>
-                        <td>
-                            <form:select path="caseSign">
-                                <form:option value="${aCase.get()}">${aCase.get().caseSign}</form:option>
-                            </form:select><br><form:errors path="caseSign" cssClass="errors"/>
-                        </td>
-                    </tr>
+                    <h3><a href="javascript:history.back();"><--Back</A></h3>
+                    <h3>Case sign: ${aCase.get().caseSign}</h3>
+                    <form:hidden path="caseSign" value="${aCase.get().id}"/>
+                    <br><form:errors path="caseSign" cssClass="errors"/>
+
                     <tr>
                         <th>Description:</th>
                         <td><form:textarea rows="2" cols="50" path="description"/><br><form:errors path="description"

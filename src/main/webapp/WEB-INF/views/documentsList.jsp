@@ -26,8 +26,8 @@
         <h2>List of documents</h2>
         <div class="table">
             <table id="table_id_documents">
-                <h3><a href="javascript:history.back();"><--Back</A></h3>
-                <h3>Case sign: ${caseSign.get().caseSign}</h3>
+                <h3><a href="/casesList"><--Back</A></h3>
+                <h3 id="caseSignClass">Case sign: ${caseSign.get().caseSign}</h3>
                 <h3><a href="/addDocument/${caseSign.get().id}">Add document</a></h3>
                 <thead>
                 <tr>
